@@ -827,6 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinding: {fileID: 1053304071}
+  player: {fileID: 466794580}
   tileSpacing: 1.25
   moveSpeed: 5
 --- !u!1 &883392576
@@ -1302,6 +1303,10 @@ PrefabInstance:
       propertyPath: Path
       value: 
       objectReference: {fileID: 1053304071}
+    - target: {fileID: 5918522751153806904, guid: 6cc5a40bcf2783e40b6c6f8b891e4971, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 871855607}
     - target: {fileID: 5918522751153806904, guid: 6cc5a40bcf2783e40b6c6f8b891e4971, type: 3}
       propertyPath: moveSpeed
       value: 5
