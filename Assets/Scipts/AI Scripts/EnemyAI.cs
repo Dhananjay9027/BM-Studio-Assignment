@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour, AI
 {
     [SerializeField] private Path pathfinding;
+    [SerializeField] private Transform player;
     private Vector2Int currentGridPosition;
     public Vector2Int CurrentPosition => currentGridPosition;
     private bool isMoving = false;
@@ -25,8 +26,8 @@ public class EnemyAI : MonoBehaviour, AI
             Mathf.RoundToInt(transform.position.x / tileSpacing),
             Mathf.RoundToInt(transform.position.z / tileSpacing)
         );
-
-        List<Vector2Int> path = pathfinding.FindPath(enemyPos, target);
+        Vector2Int playerPosition= new Vector2Int(Mathf.RoundToInt(player.position.x / tileSpacing), Mathf.RoundToInt(player.position.z / tileSpacing));
+        List<Vector2Int> path = pathfinding.FindPath(enemyPos, target,playerPosition);
         if (path != null)
         {
             //Debug.Log(target);

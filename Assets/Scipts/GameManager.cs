@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Vector2Int enemyStartPosition = new Vector2Int(0, 0); 
+        Vector2Int enemyStartPosition = new Vector2Int(8, 8); 
         enemyAI.Initialize(enemyStartPosition);
     }
 

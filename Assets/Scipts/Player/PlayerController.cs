@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     //[SerializeField] private Transform Spaw_location; 
     public Vector2Int playerPosition = new Vector2Int(0, 0); //starting position on the grid
+    [SerializeField] private EnemyAI enemy;
     [SerializeField] private float tileSpacing;
     [SerializeField] private GameManager GameManager;
     public Path Path;
@@ -71,7 +72,8 @@ public class PlayerController : MonoBehaviour
         }
         inputEnabled = false;
         Vector2Int playerPos = new Vector2Int(Mathf.RoundToInt(transform.position.x/tileSpacing), Mathf.RoundToInt(transform.position.z/tileSpacing));
-        List<Vector2Int> path = Path.FindPath(playerPos, target);
+        Vector2Int enemyPosition = enemy.CurrentPosition;
+        List<Vector2Int> path = Path.FindPath(playerPos, target,enemyPosition);
         if (path != null)
         {
            // Debug.Log(playerPos);

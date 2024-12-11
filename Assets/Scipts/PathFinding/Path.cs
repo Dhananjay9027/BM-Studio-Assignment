@@ -21,15 +21,16 @@ public class Path : MonoBehaviour
         Debug.Log("grid iniliazed");
     }
 
-    public  bool IsWalkable(Vector2Int position)
+    public  bool IsWalkable(Vector2Int position, Vector2Int? restrictedPosition = null)
     {
         return position.x >= 0 && position.x < 10 &&
                position.y >= 0 && position.y < 10 &&
-               grid[position.x, position.y]; 
+               grid[position.x, position.y] &&
+               (restrictedPosition == null || position != restrictedPosition); 
     }
-    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, Vector2Int restrictedPosition)
     {
-        if(IsWalkable(target)==false)
+        if(IsWalkable(target,restrictedPosition)==false)
         {
             return null;
         }
@@ -54,7 +55,7 @@ public class Path : MonoBehaviour
 
             foreach (Vector2Int neighbor in GetNeighbors(currentNode.position))
             {
-                if (!IsWalkable(neighbor) || closedList.Any(n => n.position == neighbor))
+                if (!IsWalkable(neighbor, restrictedPosition) || closedList.Any(n => n.position == neighbor))
                     continue;
 
                 int newMovementCost = currentNode.gCost + 1;
@@ -77,23 +78,18 @@ public class Path : MonoBehaviour
 
     List<Vector2Int> GetNeighbors(Vector2Int position)
     {
-        
         return new List<Vector2Int>
     {
-        new Vector2Int(position.x + 1, position.y),    
-        new Vector2Int(position.x - 1, position.y),     
-        new Vector2Int(position.x, position.y + 1),     
-        new Vector2Int(position.x, position.y - 1),     
-        new Vector2Int(position.x + 1, position.y + 1), 
-        new Vector2Int(position.x - 1, position.y + 1), 
-        new Vector2Int(position.x + 1, position.y - 1), 
-        new Vector2Int(position.x - 1, position.y - 1)  
+        new Vector2Int(position.x + 1, position.y),  
+        new Vector2Int(position.x - 1, position.y),  
+        new Vector2Int(position.x, position.y + 1),  
+        new Vector2Int(position.x, position.y - 1)  
     }.Where(p => IsWithinBounds(p)).ToList();
     }
 
     int GetHeuristic(Vector2Int a, Vector2Int b)
     {
-        return Mathf.Max(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
     bool IsWithinBounds(Vector2Int position)
